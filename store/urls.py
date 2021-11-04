@@ -4,6 +4,7 @@ from store.views.home import Index, store
 from store.views.signup import Signup
 from store.views.login import Login, logout
 from store.views.cart import Cart
+from store.views.confirm_order import Confirm
 from store.views.checkout import CheckOut
 from store.views.runbot import RunBot
 from store.views.orders import OrderView
@@ -18,6 +19,10 @@ urlpatterns = [
     path('login', Login.as_view(), name='login'),
     path('logout', logout, name='logout'),
     path('cart', auth_middleware(Cart.as_view()), name='cart'),
+
+    path('confirm/',
+         Confirm.as_view(), name='confirm'),
+
     path('check-out', CheckOut.as_view(), name='checkout'),
     path('run-bot', RunBot.as_view(), name='runbot'),
     path('orders', auth_middleware(OrderView.as_view()), name='orders'),

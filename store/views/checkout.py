@@ -7,9 +7,8 @@ from django.views import View
 from store.models.product import Products
 from store.models.orders import Order
 
-from django.core.mail import EmailMessage
 from django.core.mail import send_mail
-from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
 
 
 class CheckOut(View):
@@ -30,6 +29,7 @@ class CheckOut(View):
         tot = 0.0
         tot_disc = 0.0
         net = 0.0
+        orderlist = []
         for product in products:
             tot += product.price * int(cart.get(str(product.id)))
 
@@ -45,22 +45,40 @@ class CheckOut(View):
                           phone=phone,
                           quantity=cart.get(str(product.id)))
             order.save()
+            added_order = Order.objects.filter(
+                customer=Customer(id=customer)).order_by('-id')[0]
+            orderlist.append(str(added_order.id))
+        orderlist_str = ",".join(orderlist)
         net = tot-tot_disc
-        message = "Your total amount is "
+        message = "<p>Your total amount is "
         message += str("{:.2f}".format(net))+"CAD . It was "
         message += str("{:.2f}".format(tot)) + " CAD"
         message += ". You saved "
-        message += str("{:.2f}".format(tot_disc)) + " CAD. Thank You"
+        message += str("{:.2f}".format(tot_disc)) + \
+            " CAD.</p><p><strong> Thank You.....</strong></p>"
+        message += '<p>mememem</p>'
+        #message += '<a href="confirm/order_list=orderlist_str">Confirm</a>'
+        message += '<a href="http://127.0.0.1:8000/confirm/?order_list='
+        message += orderlist_str+'">Confirm </a>'
+        message += '<p>mememem</p>'
 
+        print('orderlist', *orderlist)
         request.session['cart'] = {}
         try:
-            send_mail(
-                'The Store: Order Details',
-                message,
-                'mervat.mustafa@dcmail.ca',
-                [email, 'em_me75@yahoo.com'],
-                fail_silently=False,
-            )
+            # send_mail(
+            #    'The Store: Order Details',
+            #    message,
+            #    'mervat.mustafa@dcmail.ca',
+            #    [email],
+            #    fail_silently=False,
+            # )
+            subject, from_email, to = 'The Store: Order Details',  'mervat.mustafa@dcmail.ca', email
+            text_content = 'This is an important message.'
+            html_content = message
+            msg = EmailMultiAlternatives(
+                subject, text_content, from_email, [to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
         except Exception as e:
             print(e)
 

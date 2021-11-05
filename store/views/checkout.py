@@ -30,6 +30,7 @@ class CheckOut(View):
         tot_disc = 0.0
         net = 0.0
         orderlist = []
+        order_details = "<table><tr><th>Product</th><th>Quantity</th><th>Price</th><th>Discount</th></tr>"
         for product in products:
             tot += product.price * int(cart.get(str(product.id)))
 
@@ -44,34 +45,34 @@ class CheckOut(View):
                           address=address,
                           phone=phone,
                           quantity=cart.get(str(product.id)))
+            order_details += "<tr><td>"+product.name+"</td>"
+            order_details += "<td>"+str(cart.get(str(product.id)))+"</td>"
+            order_details += "<td>"+str("{:.2f}".format(product.price))+"</td>"
+            order_details += "<td>"+str("{:.2f}".format(float(product.price) *
+                                        float(float(disc)/100)))+"</td></tr>"
+
             order.save()
             added_order = Order.objects.filter(
                 customer=Customer(id=customer)).order_by('-id')[0]
             orderlist.append(str(added_order.id))
         orderlist_str = ",".join(orderlist)
         net = tot-tot_disc
+
         message = "<p>Your total amount is "
         message += str("{:.2f}".format(net))+"CAD . It was "
         message += str("{:.2f}".format(tot)) + " CAD"
         message += ". You saved "
         message += str("{:.2f}".format(tot_disc)) + \
-            " CAD.</p><p><strong> Thank You.....</strong></p>"
-        message += '<p>mememem</p>'
-        #message += '<a href="confirm/order_list=orderlist_str">Confirm</a>'
-        message += '<a href="http://127.0.0.1:8000/confirm/?order_list='
-        message += orderlist_str+'">Confirm </a>'
-        message += '<p>mememem</p>'
+            " CAD.</p>"
+        message += order_details+"</table>"
+        message += '<p> Please<a href="http://127.0.0.1:8000/confirm/?order_list='
+        message += orderlist_str+'">Confirm </a> that your order is completed'
+        message += '<p><strong> Thank You.</strong></p>'
 
         print('orderlist', *orderlist)
         request.session['cart'] = {}
         try:
-            # send_mail(
-            #    'The Store: Order Details',
-            #    message,
-            #    'mervat.mustafa@dcmail.ca',
-            #    [email],
-            #    fail_silently=False,
-            # )
+
             subject, from_email, to = 'The Store: Order Details',  'mervat.mustafa@dcmail.ca', email
             text_content = 'This is an important message.'
             html_content = message

@@ -168,6 +168,21 @@ $(document).ready(function () {
                 wait(1000)
                 $("#bubble").addClass('hide');
                 $("#bubble").removeAttr("id")
+                /*    console.log("hi")
+                    if (offer_no > 0 && offer_no < 4) {
+                        $('#message').hide()
+                        div_yes_no = '<div class="form-check">'
+                        div_yes_no += '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">'
+                        div_yes_no += ' <label class="form-check-label" for="flexRadioDefault1">Yes</label></div>'
+                        div_yes_no += '<div class="form-check">'
+                        div_yes_no += '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>'
+                        div_yes_no += '<label class="form-check-label" for="flexRadioDefault2">No</label></div>'
+                        window.alert("hi")
+                        $('.chat-input').append(div_yes_no)
+    
+                    }*/
+
+
                 $('.chat-body').append('<div class="chat-bubble you">' + ai_response + '</div>');
 
             },

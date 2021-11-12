@@ -10,6 +10,7 @@ $(document).ready(function () {
         $('.chat-mail').addClass('hide');
         $('.chat-body').removeClass('hide');
         $('.chat-input').removeClass('hide');
+        $('#yes-no').hide()
         $('.chat-header-option').removeClass('hide');
     });
     $('.end-chat').click(function () {
@@ -77,6 +78,13 @@ $(document).ready(function () {
         //window.alert($('#disc').val())
     });
 
+    $("#rad-yes").click(function () {
+        $("#message").val("Yes");
+    });
+    $("#rad-no").click(function () {
+        $("#message").val("No");
+    });
+
     $("#sendmessage").click(function () {
         const value = $("#message").val();
 
@@ -89,6 +97,7 @@ $(document).ready(function () {
             data: JSON.stringify({ "message": value }),
             success: (response) => {
                 ai_response = ""
+                accept_flag = parseInt(response['message']['accept_flag'])
                 min_disc = parseFloat(response['message']['min_disc'])
                 max_disc = parseFloat(response['message']['max_disc'])
                 mid_disc = (min_disc + max_disc) / 2
@@ -96,27 +105,28 @@ $(document).ready(function () {
                 user_response = response['message']['user_response']
                 disc = 0
                 offer_no = parseInt(response['message']['offer_no'])
+                end_offer = false
                 if (min_disc > 0) {
                     if (offer_no == 1) {
                         ai_response += response['message']['text'];
                         ai_response += ". It is our pleaser to offer you"
                         disc = min_disc
                     }
-                    else if (offer_no == 2) {
+                    else if (offer_no == 2 && !accept_flag) {
                         if (user_response.toLowerCase().startsWith('n')) {
                             ai_response += "Well, I have a better offer for you"
                             disc = mid_disc
                         }
 
                     }
-                    else if (offer_no == 3) {
+                    else if (offer_no == 3 && !accept_flag) {
                         if (user_response.toLowerCase().startsWith('n')) {
                             ai_response += "This is the best offer I can give you"
                             disc = max_disc
                         }
 
                     }
-                    else if (offer_no == 4) {
+                    else if (offer_no == 4 && !accept_flag) {
                         if (user_response.toLowerCase().startsWith('n')) {
                             ai_response = "Sorry this is the best Offer I could give you"
                         }
@@ -145,7 +155,7 @@ $(document).ready(function () {
                                 disc = mid_disc
                             else if (offer_no == 3)
                                 disc = max_disc
-
+                            end_offer = true
                             console.log('offer_no', offer_no)
                             tot = amount - (disc / 100 * amount)
                             ai_response += "You got " + disc + "%  discount , the tatol amount is :" +
@@ -168,22 +178,21 @@ $(document).ready(function () {
                 wait(1000)
                 $("#bubble").addClass('hide');
                 $("#bubble").removeAttr("id")
-                /*    console.log("hi")
-                    if (offer_no > 0 && offer_no < 4) {
-                        $('#message').hide()
-                        div_yes_no = '<div class="form-check">'
-                        div_yes_no += '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">'
-                        div_yes_no += ' <label class="form-check-label" for="flexRadioDefault1">Yes</label></div>'
-                        div_yes_no += '<div class="form-check">'
-                        div_yes_no += '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>'
-                        div_yes_no += '<label class="form-check-label" for="flexRadioDefault2">No</label></div>'
-                        window.alert("hi")
-                        $('.chat-input').append(div_yes_no)
-    
-                    }*/
 
-
+                if (offer_no > 0 && offer_no < 4 && !end_offer && !accept_flag) {
+                    $('#yes-no').show()
+                    $('#rad-yes').prop('checked', true);
+                    $('#rad-no').prop('checked', false);
+                    $('#message').val("Yes")
+                    $('#message').hide()
+                }
+                else {
+                    $('#yes-no').hide()
+                    $('#message').val("")
+                    $('#message').show()
+                }
                 $('.chat-body').append('<div class="chat-bubble you">' + ai_response + '</div>');
+                $('.chat-body').animate({ scrollTop: $('.chat-body').height() }, 1000);
 
             },
             contentType: "application/json; charset=utf-8",

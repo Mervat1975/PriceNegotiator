@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 #import django_heroku
-import django_on_heroku
+import django_on_heroku as djher
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -143,4 +143,4 @@ EMAIL_HOST_PASSWORD = 'MemeEmad2001'
 
 # Activate Django-Heroku.
 # django_heroku.settings(locals())
-django_on_heroku.settings(locals())
+djher.settings(locals())

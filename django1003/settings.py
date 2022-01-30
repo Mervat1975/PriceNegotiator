@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import django_heroku
 import os
 from pathlib import Path
 
@@ -22,9 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-tf1k4$z#0p*k8wg+9c)9zfem+*la%qlalub-5a^=h-q7spnh!m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+# Updated to false for deploying
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['price-negotiator.herokuapp.com']
 
 # Application definition
 
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -133,3 +137,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mustafamervat1@gmail.com'
 EMAIL_HOST_PASSWORD = 'MemeEmad2001'
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())

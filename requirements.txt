@@ -1,4 +1,4 @@
 Django==3.2.8
 nltk==3.6.5
 numpy==1.19.5
-tensorflow==2.6.0
+tensorflow==2.7.0

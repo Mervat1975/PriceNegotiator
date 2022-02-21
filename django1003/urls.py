@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),
     path('bot/', include('ai.urls')),
+    path('sentiment/', include('sentiment.urls')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

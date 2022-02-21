@@ -21,6 +21,3 @@ admin.site.register(Category)
 admin.site.register(Customer)
 admin.site.register(Order)
 admin.site.register(Discount)
-
-
-# username = Tanushree, email = tanushree7252@gmail.com, password = 1234

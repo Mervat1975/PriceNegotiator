@@ -1,0 +1,108 @@
+{% extends 'store/base.html' %}
+
+
+{% block content %}
+<div class="container">
+    <p class="display-4 pl-4 ml-4">Customer Review</p>
+
+    <form action="/sentiment/review" method="POST">
+
+        {% csrf_token %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th colspan="4" bgcolor="lightgray">Website Review</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for qu in questions %}
+                {% if qu.qu_class in "W" %}
+                <tr>
+                    <td><b>{{qu.qu_text}}</b></td>
+                    {% if qu.qu_type in "O" %}
+                    <td colspan="3"> <textarea class="btn float-left btn-outline-info col-lg-12" id="{{qu.qu_id}}"
+                            name="{{qu.qu_id}}" rows="3" cols="70"></textarea>
+                    </td>
+                    {% else %}
+
+                    <td>
+                        <select name="{{qu.qu_id}}" class="btn float-left btn-outline-info col-lg-6"
+                            aria-label=".form-select-lg example">
+                            <option value="0">--SELECT--</option>
+                            {%for op in options%}
+                            {% if op.qu_id.qu_id == qu.qu_id %}
+
+                            <option value="{{op.op_id}}">{{op.op_text}}</option>
+
+                            {% endif %}
+
+                            {% endfor %}
+
+                        </select>
+                    </td>
+
+                    {% endif %}
+                </tr>
+                {% endif %}
+                {% endfor %}
+                <thead>
+                    <tr>
+                        <th colspan="4" bgcolor="lightgray">Chatbot Review</th>
+
+                    </tr>
+                </thead>
+
+                {% for qu in questions %}
+                {% if qu.qu_class in "B" %}
+                <tr>
+                    <td><b>{{qu.qu_text}}</b></td>
+                    {% if qu.qu_type in "O" %}
+                    <td colspan="3">
+                        <textarea class="btn float-left btn-outline-info col-lg-12" id="{{qu.qu_id}}"
+                            name="{{qu.qu_id}}" rows="3"></textarea>
+                        {% else %}
+                        <div>
+                    <td colspan="3">
+                        <select name="{{qu.qu_id}}" class="btn float-left btn-outline-info col-lg-6"
+                            aria-label=".form-select-lg example">
+                            <option value="0">--SELECT--</option>
+                            {%for op in options%}
+                            {% if op.qu_id.qu_id == qu.qu_id %}
+                            <option value="{{op.op_id}}">{{op.op_text}}</option>>
+
+                            {% endif %}
+
+                            {% endfor %}
+                        </select>
+                    </td>
+
+
+                    {% endif %}
+
+                </tr>
+                {% endif %}
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td>
+                        <div class="mb-3 form-check">
+                            <button type="submit" class="btn btn-sm btn-info col-lg-4">Submit</button>
+                        </div>
+                    </td>
+
+
+                </tr>
+
+            </tbody>
+
+
+        </table>
+
+    </form>
+
+</div>
+
+
+{% endblock %}

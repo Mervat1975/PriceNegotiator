@@ -8,10 +8,19 @@ class Review(View):
     return_url = None
 
     def get(self, request):
-        questions = Question.get_all_act_Question()
+        get_data = request.GET
+
+        if (get_data.get("flag") == "0"):
+            questions = Question.get_web_act_Question()
+
+        else:
+            questions = Question.get_all_act_Question()
+
+        print("question:", questions)
+
         options = QuestionOptions.get_all_QuestionOptions()
 
-        return render(request, 'sentiment/review.html', {'questions': questions, 'options': options})
+        return render(request, 'sentiment/review.html', {'questions': questions, 'options': options, 'flag': get_data.get("flag")})
 
     def post(self, request):
         post_data = request.POST

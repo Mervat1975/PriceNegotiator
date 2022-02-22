@@ -31,6 +31,9 @@ class Question(models.Model):
     def get_all_act_Question():
         return Question.objects.filter(qu_act_status=True).order_by('qu_id')
 
+    def get_web_act_Question():
+        return Question.objects.filter(qu_act_status=True).exclude(qu_class="B").order_by('qu_id')
+
     def __str__(self):
         return self.qu_text
 

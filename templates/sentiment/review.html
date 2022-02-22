@@ -47,6 +47,8 @@
                 </tr>
                 {% endif %}
                 {% endfor %}
+
+                {% if flag in "1" %}
                 <thead>
                     <tr>
                         <th colspan="4" bgcolor="lightgray">Chatbot Review</th>
@@ -84,6 +86,11 @@
                 </tr>
                 {% endif %}
                 {% endfor %}
+
+
+            </tbody>
+            {% endif %}
+            <tbody>
                 <tr>
                     <td></td>
                     <td>
@@ -94,9 +101,7 @@
 
 
                 </tr>
-
             </tbody>
-
 
         </table>
 

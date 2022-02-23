@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib.auth.hashers import check_password
 from sentiment.models import Question, QuestionOptions, TextResponse, OptionResponse
 from django.views import View
+from sentiment.ai.predection import predict_sentiment
 
 
 class Review(View):
@@ -39,8 +40,9 @@ class Review(View):
             qu_ans = post_data.get(str(qu.qu_id))
 
             if qu.qu_type is "O":
+                predict = predict_sentiment(qu_ans)
                 ans = TextResponse(txt_res_text=qu_ans,
-                                   txt_res_sentiment="is not determined yet",
+                                   txt_res_sentiment=predict,
                                    qu_id=qu)
                 ans.saveTextRes()
             else:

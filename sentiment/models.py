@@ -63,8 +63,8 @@ class TextResponse(models.Model):
     txt_res_date = models.DateField(default=datetime.datetime.today)
     txt_res_text = models.CharField(max_length=200)
     txt_res_sentiment = models.CharField(max_length=50)
-    qu_id = models.OneToOneField(Question, related_name='QuestionText', on_delete=models.CASCADE, null=False,
-                                 blank=False)
+    qu_id = models.ForeignKey(Question, related_name='QuestionText', on_delete=models.CASCADE, null=False,
+                              blank=False)
 
     # to save the data
     def saveTextRes(self):

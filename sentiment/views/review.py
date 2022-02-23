@@ -19,16 +19,24 @@ class Review(View):
         print("question:", questions)
 
         options = QuestionOptions.get_all_QuestionOptions()
+        request.session['flag'] = get_data.get("flag")
 
         return render(request, 'sentiment/review.html', {'questions': questions, 'options': options, 'flag': get_data.get("flag")})
 
     def post(self, request):
+
         post_data = request.POST
         print("Post", post_data)
-        questions = Question.get_all_act_Question()
+        print("flag", request.session['flag'])
+
+        if (request.session['flag'] == "0"):
+            questions = Question.get_web_act_Question()
+
+        else:
+            questions = Question.get_all_act_Question()
+
         for qu in questions:
             qu_ans = post_data.get(str(qu.qu_id))
-            print(qu_ans)
 
             if qu.qu_type is "O":
                 ans = TextResponse(txt_res_text=qu_ans,

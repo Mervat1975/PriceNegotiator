@@ -11,11 +11,13 @@
 
 
 
+
 <hr>
 <table style="width: 100%;">
     <tr>
         <td>
-            <div class="col-lg-10 rounded mx-auto border pt-12">
+            <div class="col-lg-10 rounded mx-auto border pt-12"
+                style="background-image: linear-gradient(to right, #cbecf7, #79d4f0, #cbecf7);">
 
                 <p>
                 <h3>{{all_res_count}}</h3>Total Number of Responses</p>
@@ -25,7 +27,8 @@
             </div>
         </td>
         <td>
-            <div class="col-lg-10 rounded mx-auto border pt-12">
+            <div class=" col-lg-10 rounded mx-auto border pt-12"
+                style="background-image: linear-gradient(to right, #cbecf7, #79d4f0, #cbecf7);">
                 <p>
                 <h3>{{txt_res_count}}</h3>Total Number of Free text Response</p>
 
@@ -33,7 +36,8 @@
             </div>
         </td>
         <td>
-            <div class="col-lg-10 rounded mx-auto border pt-12">
+            <div class="col-lg-10 rounded mx-auto border pt-12"
+                style="background-image: linear-gradient(to right, #cbecf7, #79d4f0, #cbecf7);">
                 <p>
                 <h3>{{op_res_count}}</h3>Total Number of Option Response</p>
 
@@ -66,71 +70,131 @@
                                 <h5> Reviews Visualization Setting</h5>
                             </label>
                         </div>
-                        <div class="form-group">
-                            <label for=""></label>
+                        <div class="list-group-item list-group-item-action btn btn-outline-info">
+                            <div class="form-group">
+                                <label for=""></label>
 
-                            <select id="review-class" name="review-class"
-                                class="btn float-left btn-outline-info col-lg-6" aria-label=".form-select-lg example">
-                                <h1>{{ review_class}}</h1>
-                                {%if review_class in "W" %}
-                                <option value="W" selected>Websie</option>
-                                {%else%}
-                                <option value="W">Websie</option>
-                                {%endif%}
+                                <select id="review-class" name="review-class"
+                                    class="btn float-left btn-outline-info col-lg-12"
+                                    aria-label=".form-select-lg example">
 
-                                {%if review_class in "B" %}
-                                <option value="B" selected>Chatbot</option>
-                                {%else%}
-                                <option value="B">Chatbot</option>
-                                {%endif%}
+                                    {%if review_class in "W" %}
+                                    <option value="W" selected>Websie</option>
+                                    {%else%}
+                                    <option value="W">Websie</option>
+                                    {%endif%}
 
-                            </select>
-                            <select name="type" class="btn float-left btn-outline-info col-lg-6"
-                                aria-label=".form-select-lg example">
-                                {%if type in "pie"%}
-                                <option value="pie" selected>pie</option>
-                                {%else%}
-                                <option value="pie">pie</option>
-                                {%endif%}
-                                {%if type in "line"%}
-                                <option value="line" selected>line</option>
-                                {%else%}
-                                <option value="line">line</option>
-                                {%endif%}
-                                {%if type in "bar"%}
-                                <option value="bar" selected>bar</option>
-                                {%else%}
-                                <option value="bar">bar</option>
-                                {%endif%}
-                                {%if type in "radar"%}
-                                <option value="radar" selected>radar</option>
-                                {%else%}
-                                <option value="radar">radar</option>
-                                {%endif%}
-                                {%if type in "doughnut"%}
-                                <option value="doughnut" selected>doughnut</option>
-                                {%else%}
-                                <option value="doughnut">doughnut</option>
-                                {%endif%}
-                                {% if type in "polarArea"%}
-                                <option value="polarArea" selected>polar area</option>
-                                {%else%}
-                                <option value="polarArea">polar area</option>
-                                {%endif%}
+                                    {%if review_class in "B" %}
+                                    <option value="B" selected>Chatbot</option>
+                                    {%else%}
+                                    <option value="B">Chatbot</option>
+                                    {%endif%}
+
+                                </select>
 
 
-                            </select>
 
 
+
+                            </div>
+                        </div>
+                        <div class="list-group-item list-group-item-action btn btn-outline-info">
+                            <div class="form-group">
+                                <label for=""></label>
+
+
+                                <select name="type" class="btn float-left btn-outline-info col-lg-12"
+                                    aria-label=".form-select-lg example">
+                                    {%if type in "pie"%}
+                                    <option value="pie" selected>pie</option>
+                                    {%else%}
+                                    <option value="pie">pie</option>
+                                    {%endif%}
+                                    {%if type in "line"%}
+                                    <option value="line" selected>line</option>
+                                    {%else%}
+                                    <option value="line">line</option>
+                                    {%endif%}
+                                    {%if type in "bar"%}
+                                    <option value="bar" selected>bar</option>
+                                    {%else%}
+                                    <option value="bar">bar</option>
+                                    {%endif%}
+                                    {%if type in "radar"%}
+                                    <option value="radar" selected>radar</option>
+                                    {%else%}
+                                    <option value="radar">radar</option>
+                                    {%endif%}
+                                    {%if type in "doughnut"%}
+                                    <option value="doughnut" selected>doughnut</option>
+                                    {%else%}
+                                    <option value="doughnut">doughnut</option>
+                                    {%endif%}
+                                    {% if type in "polarArea"%}
+                                    <option value="polarArea" selected>polar area</option>
+                                    {%else%}
+                                    <option value="polarArea">polar area</option>
+                                    {%endif%}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item list-group-item-action btn btn-outline-info">
+                            <div class="form-group">
+                                <label for=""></label>
+
+                                <select id="month" name="from-months" class="btn float-left btn-outline-info col-lg-12"
+                                    aria-label=".form-select-lg example">
+                                    {%if from_months in "0"%}
+                                    <option value="0" selected>Life Time</option>
+                                    {%else%}
+                                    <option value="0">Life Time</option>
+                                    {%endif%}
+                                    {%if from_months in "1"%}
+                                    <option value="1" selected>Last Month</option>
+                                    {%else%}
+                                    <option value="1">Last Month</option>
+                                    {%endif%}
+                                    {%if from_months in "3"%}
+                                    <option value="3" selected>Last 3 Months</option>
+                                    {%else%}
+                                    <option value="3">Last 3 Months</option>
+                                    {%endif%}
+                                    {%if from_months in "6"%}
+                                    <option value="6" selected>Last 6 Months</option>
+                                    {%else%}
+                                    <option value="6">Last 6 months</option>
+                                    {%endif%}
+
+                                </select>
+                            </div>
 
                         </div>
-                        <button type="submit" class="btn btn-sm btn-info col-lg-4">View</button>
+                        <div class="list-group-item list-group-item-action btn btn-outline-info">
+                            <div class="form-check">
+                                {%if check_active in "active"%}
+                                <input class="form-check-input" type="checkbox" name="check-active" value="active"
+                                    id="flexCheckDefault" checked>
+                                {%else%}
+                                <input class="form-check-input" type="checkbox" name="check-active" value="active"
+                                    id="flexCheckDefault">
+                                {%endif%}
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Active Only
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="list-group-item list-group-item-action btn btn-outline-info">
+                            <button type="submit" class="btn btn-sm btn-info col-lg-12">View</button>
+                        </div>
                     </div>
 
 
 
                 </form>
             </div>
+
         </div>
 
 

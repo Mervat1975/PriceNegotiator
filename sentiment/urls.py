@@ -4,7 +4,8 @@ from django.conf import settings
 from sentiment.views.signup import Signup
 from sentiment.views.review import Review
 from sentiment.views.login import Login, logout
-from sentiment.views.home import home, review_submission
+from sentiment.views.home import review_submission
+from sentiment.views.charts import Charts
 from django.conf.urls import url
 from django.urls import include, path
 from sentiment.middlewares.auth import auth_middleware
@@ -15,7 +16,7 @@ from django.conf.urls.static import static
 import sentiment
 
 urlpatterns = [
-    path('', auth_middleware(home), name='admin_homepage'),
+    path('dashboard', auth_middleware(Charts.as_view()), name='admin_homepage'),
     path('signup', Signup.as_view(), name='admin_signup'),
     path('login', Login.as_view(), name='admin_login'),
     path('logout', logout, name='admin_logout'),

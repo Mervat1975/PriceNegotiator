@@ -1,0 +1,159 @@
+{% extends 'sentiment/base.html' %}
+
+
+{% block content %}
+<h3 id="qu" hidden>{{qu_name}}</h3>
+<h4 id="data" hidden>{{data}} </h4>
+<h4 id="labels" hidden> {{labels}} </h4>
+<h5 id="qu_id" hidden>{{qu_id}}</h5>
+<h5 id="op_num" hidden>{{qu_op_num}}</h5>
+
+
+<hr>
+<table style="width: 100%;">
+    <tr>
+        <td>
+            <div class="col-lg-10 rounded mx-auto border pt-12">
+                <p>
+                <h1>{{all_res_count}}</h1>Total Number of Responses</p>
+
+
+
+            </div>
+        </td>
+        <td>
+            <div class="col-lg-10 rounded mx-auto border pt-12">
+                <p>
+                <h1>{{txt_res_count}}</h1>Total Number of Free text Response</p>
+
+
+            </div>
+        </td>
+        <td>
+            <div class="col-lg-10 rounded mx-auto border pt-12">
+                <p>
+                <h1>{{op_res_count}}</h1>Total Number of Option Response</p>
+
+
+            </div>
+        </td>
+
+    </tr>
+</table>
+
+
+<hr>
+
+<div class="col-lg-3 rounded mx-auto border pt-4">
+
+    <form action="/sentiment/dashboard" method="POST">
+
+        {% csrf_token %}
+
+
+
+        <div class="form-group">
+            <label for="">
+                <h3>Review For</h3>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for=""></label>
+
+            <select id="review-class" name="review-class" class="btn float-left btn-outline-info col-lg-6"
+                aria-label=".form-select-lg example">
+                <option value="W">Websie</option>
+                <option value="B">Chatbot</option>
+            </select>
+
+            <button type="submit" class="btn btn-sm btn-info col-lg-4">View Charts</button>
+
+
+        </div>
+
+
+
+    </form>
+</div>
+
+{%if flag in "1" %}
+<hr>
+<table style="width:100%;" border="2">
+    <tr>
+        {% for qu in questions %}
+        <td>
+            <div class="col-lg-10 rounded mx-auto border pt-12"></div>
+            <p>{{qu.qu_text}}</p>
+            <div id="container" style="width: 100%;">
+                <canvas id="qu{{qu.qu_id}}"></canvas>
+            </div>
+            </div>
+        </td>
+        {%endfor%}
+    </tr>
+</table>
+{%endif%}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script>
+
+    var d = $('#data').text();
+    let darray = d.replace('[', '').replace(']', '').split(",").map(Number);
+    var l = $('#labels').text();
+    let larray = l.replace('[', '').replace(']', '').replaceAll("'", '').split(",").map(String);
+    var qu_text = $('#qu').text();
+    let qu_text_array = qu_text.replace('[', '').replace(']', '').replaceAll("'", '').split(",").map(String);
+    var qu_id = $('#qu_id').text();
+    let qu_id_array = qu_id.replace('[', '').replace(']', '').replaceAll("'", '').split(",").map(Number);
+    var op_num = $('#op_num').text();
+    let op_num_array = op_num.replace('[', '').replace(']', '').replaceAll("'", '').split(",").map(Number);
+
+    console.log('darray: ', darray)
+    console.log('larray:', larray)
+    console.log("qu_text_array:", qu_text_array)
+    console.log("qu_id_array:", qu_id_array)
+    console.log("op_num_array:", op_num_array)
+
+
+
+    var back = ['#5bc0de', '#cbecf7', '#79d4f0', '#ace0f0', '#ace0f5']
+    var config = []
+    for (i = 0; i < qu_id_array.length(); i++) {
+        var data = []
+        var labels = []
+        var qu = null
+        
+        for (j = i*op_num_array[i-1]; j < op_num_array[i]+i; j++) {
+            data.push(darray[j])
+        }
+
+        config[i] = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: data,
+                    backgroundColor: back,
+                    label: qu
+                }],
+                labels: labels,
+            },
+            options: {
+                responsive: true
+            }
+        };
+    }
+
+    window.onload = function () {
+        var ctx = document.getElementById('pie-chart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+    };
+
+</script>
+
+{% endblock %}

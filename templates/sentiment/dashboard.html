@@ -1,0 +1,240 @@
+{% extends 'sentiment/base.html' %}
+
+
+{% block content %}
+<h3 id="qu" hidden>{{qu_name}}</h3>
+<h4 id="data" hidden>{{data}} </h4>
+<h4 id="labels" hidden> {{labels}} </h4>
+<h5 id="qu_id" hidden>{{qu_id}}</h5>
+<h5 id="op_num" hidden>{{qu_op_num}}</h5>
+<h5 id="ch_type" hidden>{{type}}</h5>
+
+
+
+<hr>
+<table style="width: 100%;">
+    <tr>
+        <td>
+            <div class="col-lg-10 rounded mx-auto border pt-12">
+
+                <p>
+                <h3>{{all_res_count}}</h3>Total Number of Responses</p>
+
+
+
+            </div>
+        </td>
+        <td>
+            <div class="col-lg-10 rounded mx-auto border pt-12">
+                <p>
+                <h3>{{txt_res_count}}</h3>Total Number of Free text Response</p>
+
+
+            </div>
+        </td>
+        <td>
+            <div class="col-lg-10 rounded mx-auto border pt-12">
+                <p>
+                <h3>{{op_res_count}}</h3>Total Number of Option Response</p>
+
+
+            </div>
+        </td>
+
+    </tr>
+</table>
+
+
+<hr>
+<div class="container-fluid mt-3">
+    <div class="row">
+
+
+        <!-- filter -->
+
+        <div class="col-lg-3 mx-auto">
+            <div class="list-group">
+
+                <form action="/sentiment/dashboard" method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="list-group-item list-group-item-action btn btn-outline-info">
+
+                        <div class="form-group">
+                            <label for="">
+                                <h5> Reviews Visualization Setting</h5>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for=""></label>
+
+                            <select id="review-class" name="review-class"
+                                class="btn float-left btn-outline-info col-lg-6" aria-label=".form-select-lg example">
+                                <h1>{{ review_class}}</h1>
+                                {%if review_class in "W" %}
+                                <option value="W" selected>Websie</option>
+                                {%else%}
+                                <option value="W">Websie</option>
+                                {%endif%}
+
+                                {%if review_class in "B" %}
+                                <option value="B" selected>Chatbot</option>
+                                {%else%}
+                                <option value="B">Chatbot</option>
+                                {%endif%}
+
+                            </select>
+                            <select name="type" class="btn float-left btn-outline-info col-lg-6"
+                                aria-label=".form-select-lg example">
+                                {%if type in "pie"%}
+                                <option value="pie" selected>pie</option>
+                                {%else%}
+                                <option value="pie">pie</option>
+                                {%endif%}
+                                {%if type in "line"%}
+                                <option value="line" selected>line</option>
+                                {%else%}
+                                <option value="line">line</option>
+                                {%endif%}
+                                {%if type in "bar"%}
+                                <option value="bar" selected>bar</option>
+                                {%else%}
+                                <option value="bar">bar</option>
+                                {%endif%}
+                                {%if type in "radar"%}
+                                <option value="radar" selected>radar</option>
+                                {%else%}
+                                <option value="radar">radar</option>
+                                {%endif%}
+                                {%if type in "doughnut"%}
+                                <option value="doughnut" selected>doughnut</option>
+                                {%else%}
+                                <option value="doughnut">doughnut</option>
+                                {%endif%}
+                                {% if type in "polarArea"%}
+                                <option value="polarArea" selected>polar area</option>
+                                {%else%}
+                                <option value="polarArea">polar area</option>
+                                {%endif%}
+
+
+                            </select>
+
+
+
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-info col-lg-4">View</button>
+                    </div>
+
+
+
+                </form>
+            </div>
+        </div>
+
+
+
+
+        {%if flag in "1" %}
+        <div id='products' class="col-lg-9 mx-auto">
+            <div class="row mx-auto">
+
+                {% for qu in questions %}
+                <div class="card mx-auto mb-3" id="#" style=" width: 18rem;">
+
+                    <canvas id="qu{{qu.qu_id}}"></canvas>
+
+                    <div class="card-body">
+
+                        <p class="card-title">{{qu.qu_text}}</p>
+
+
+
+
+                    </div>
+
+                </div>
+
+
+                {%endfor%}
+            </div>
+        </div>
+
+
+
+        {%endif%}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script>
+
+    var d = $('#data').text();
+    let darray = d.replace('[', '').replace(']', '').split(",").map(Number);
+    var l = $('#labels').text();
+    let larray = l.replace('[', '').replace(']', '').replaceAll("'", '').split(",").map(String);
+    var qu_text = $('#qu').text();
+    let qu_text_array = qu_text.replace('[', '').replace(']', '').replaceAll("'", '').split(",").map(String);
+    var qu_id = $('#qu_id').text();
+    let qu_id_array = qu_id.replace('[', '').replace(']', '').replaceAll("'", '').split(",").map(Number);
+    var op_num = $('#op_num').text();
+    let op_num_array = op_num.replace('[', '').replace(']', '').replaceAll("'", '').split(",").map(Number);
+
+
+    var back = ['#5bc0de', '#cbecf7', '#79d4f0', '#ace0f0', '#ace0f5']
+    var config = []
+    for (let i = 0; i < qu_id_array.length; i++) {
+        var data = []
+        var labels = []
+        var qu = qu_text_array[i]
+        if (i > 0)
+            pre_op_num = op_num_array[i - 1] - 1
+
+        else
+            pre_op_num = 0
+
+        for (let j = i * (pre_op_num + 1); j < op_num_array[i] + (pre_op_num) + i; j++) {
+            data.push(darray[j])
+            labels.push(larray[j])
+        }
+        console.log("data", data)
+        console.log("labels", labels)
+        type = $('#ch_type').text()
+        console.log('type:', type)
+
+        config[i] = {
+            type: type,
+            data: {
+                datasets: [{
+                    data: data,
+                    backgroundColor: back,
+                    label: qu
+                }],
+                labels: labels,
+            },
+            options: {
+                responsive: true
+            }
+        };
+    }
+
+    window.onload = function () {
+        var ctx
+        for (let i = 0; i < qu_id_array.length; i++) {
+            var chart_id = 'qu' + qu_id_array[i].toString()
+            console.log(chart_id)
+            ctx = document.getElementById(chart_id).getContext('2d');
+            window.myPie = new Chart(ctx, config[i]);
+        }
+    };
+
+</script>
+
+{% endblock %}

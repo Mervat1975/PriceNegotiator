@@ -7,6 +7,8 @@
 <h4 id="labels" hidden> {{labels}} </h4>
 <h5 id="qu_id" hidden>{{qu_id}}</h5>
 <h5 id="op_num" hidden>{{qu_op_num}}</h5>
+<h5 id="ch_type" hidden>{{type}}</h5>
+
 
 
 <hr>
@@ -14,8 +16,9 @@
     <tr>
         <td>
             <div class="col-lg-10 rounded mx-auto border pt-12">
+
                 <p>
-                <h1>{{all_res_count}}</h1>Total Number of Responses</p>
+                <h3>{{all_res_count}}</h3>Total Number of Responses</p>
 
 
 
@@ -24,7 +27,7 @@
         <td>
             <div class="col-lg-10 rounded mx-auto border pt-12">
                 <p>
-                <h1>{{txt_res_count}}</h1>Total Number of Free text Response</p>
+                <h3>{{txt_res_count}}</h3>Total Number of Free text Response</p>
 
 
             </div>
@@ -32,7 +35,7 @@
         <td>
             <div class="col-lg-10 rounded mx-auto border pt-12">
                 <p>
-                <h1>{{op_res_count}}</h1>Total Number of Option Response</p>
+                <h3>{{op_res_count}}</h3>Total Number of Option Response</p>
 
 
             </div>
@@ -56,25 +59,72 @@
 
                     {% csrf_token %}
 
+                    <div class="list-group-item list-group-item-action btn btn-outline-info">
+
+                        <div class="form-group">
+                            <label for="">
+                                <h5> Reviews Visualization Setting</h5>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for=""></label>
+
+                            <select id="review-class" name="review-class"
+                                class="btn float-left btn-outline-info col-lg-6" aria-label=".form-select-lg example">
+                                <h1>{{ review_class}}</h1>
+                                {%if review_class in "W" %}
+                                <option value="W" selected>Websie</option>
+                                {%else%}
+                                <option value="W">Websie</option>
+                                {%endif%}
+
+                                {%if review_class in "B" %}
+                                <option value="B" selected>Chatbot</option>
+                                {%else%}
+                                <option value="B">Chatbot</option>
+                                {%endif%}
+
+                            </select>
+                            <select name="type" class="btn float-left btn-outline-info col-lg-6"
+                                aria-label=".form-select-lg example">
+                                {%if type in "pie"%}
+                                <option value="pie" selected>pie</option>
+                                {%else%}
+                                <option value="pie">pie</option>
+                                {%endif%}
+                                {%if type in "line"%}
+                                <option value="line" selected>line</option>
+                                {%else%}
+                                <option value="line">line</option>
+                                {%endif%}
+                                {%if type in "bar"%}
+                                <option value="bar" selected>bar</option>
+                                {%else%}
+                                <option value="bar">bar</option>
+                                {%endif%}
+                                {%if type in "radar"%}
+                                <option value="radar" selected>radar</option>
+                                {%else%}
+                                <option value="radar">radar</option>
+                                {%endif%}
+                                {%if type in "doughnut"%}
+                                <option value="doughnut" selected>doughnut</option>
+                                {%else%}
+                                <option value="doughnut">doughnut</option>
+                                {%endif%}
+                                {% if type in "polarArea"%}
+                                <option value="polarArea" selected>polar area</option>
+                                {%else%}
+                                <option value="polarArea">polar area</option>
+                                {%endif%}
 
 
-                    <div class="form-group">
-                        <label for="">
-                            <h3>Review For</h3>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for=""></label>
-
-                        <select id="review-class" name="review-class" class="btn float-left btn-outline-info col-lg-6"
-                            aria-label=".form-select-lg example">
-                            <option value="W">Websie</option>
-                            <option value="B">Chatbot</option>
-                        </select>
-
-                        <button type="submit" class="btn btn-sm btn-info col-lg-4">View Charts</button>
+                            </select>
 
 
+
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-info col-lg-4">View</button>
                     </div>
 
 
@@ -96,7 +146,10 @@
                     <canvas id="qu{{qu.qu_id}}"></canvas>
 
                     <div class="card-body">
+
                         <p class="card-title">{{qu.qu_text}}</p>
+
+
 
 
                     </div>
@@ -134,13 +187,6 @@
     var op_num = $('#op_num').text();
     let op_num_array = op_num.replace('[', '').replace(']', '').replaceAll("'", '').split(",").map(Number);
 
-    console.log('darray: ', darray)
-    console.log('larray:', larray)
-    console.log("qu_text_array:", qu_text_array)
-    console.log("qu_id_array:", qu_id_array)
-    console.log("op_num_array:", op_num_array)
-
-
 
     var back = ['#5bc0de', '#cbecf7', '#79d4f0', '#ace0f0', '#ace0f5']
     var config = []
@@ -160,9 +206,11 @@
         }
         console.log("data", data)
         console.log("labels", labels)
+        type = $('#ch_type').text()
+        console.log('type:', type)
 
         config[i] = {
-            type: 'pie',
+            type: type,
             data: {
                 datasets: [{
                     data: data,

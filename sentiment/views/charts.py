@@ -23,6 +23,7 @@ class Charts(View):
         all_res_count = op_res_count + txt_res_count
         post_data = request.POST
         review_class = post_data.get('review-class')
+        type = post_data.get('type')
         labels = []
         data = []
         qu_name = []
@@ -50,5 +51,5 @@ class Charts(View):
                     data.append(
                         OptionResponse.objects.filter(op_id=qu_op).count())
 
-        return render(request, 'sentiment/dashboard.html', {'qu_id': qu_id, 'questions': questions, 'qu_op_num': qu_op_num, 'qu_name': qu_name, 'labels': labels, 'data': data, 'flag': flag,
+        return render(request, 'sentiment/dashboard.html', {'review_class':  review_class, 'type': type, 'qu_id': qu_id, 'questions': questions, 'qu_op_num': qu_op_num, 'qu_name': qu_name, 'labels': labels, 'data': data, 'flag': flag,
                                                             'op_res_count': op_res_count, 'txt_res_count': txt_res_count, 'all_res_count': all_res_count})

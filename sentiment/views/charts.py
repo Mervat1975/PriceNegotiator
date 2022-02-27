@@ -48,19 +48,31 @@ class Charts(View):
                 qu_op_num.append(2)
 
                 labels.append("Positive")
+                if (n == 0):
+                    data.append((TextResponse.objects.filter(qu_id=qu).filter(
+                        txt_res_sentiment='positive')).count())
+                else:
+                    data.append((TextResponse.objects.filter(qu_id=qu).filter(
+                        txt_res_sentiment='positive').filter(txt_res_date__gt=past_date)).count())
 
-                data.append((TextResponse.objects.filter(qu_id=qu).filter(
-                    txt_res_sentiment='positive').filter(txt_res_date__lt=past_date)).count())
                 labels.append("Negative")
-                data.append((TextResponse.objects.filter(qu_id=qu).filter(
-                    txt_res_sentiment='negative').filter(txt_res_date__lt=past_date)).count())
+                if (n == 0):
+                    data.append((TextResponse.objects.filter(qu_id=qu).filter(
+                        txt_res_sentiment='negative')).count())
+                else:
+                    data.append((TextResponse.objects.filter(qu_id=qu).filter(
+                        txt_res_sentiment='negative').filter(txt_res_date__gt=past_date)).count())
             else:
                 qu_ops = QuestionOptions.objects.filter(qu_id=qu)
                 qu_op_num.append(qu_ops.count())
                 for qu_op in qu_ops:
                     labels.append(qu_op.op_text)
-                    data.append(
-                        (OptionResponse.objects.filter(op_id=qu_op).filter(op_res_date__lt=past_date)).count())
+                    if (n == 0):
+                        data.append(
+                            (OptionResponse.objects.filter(op_id=qu_op)).count())
+                    else:
+                        data.append(
+                            (OptionResponse.objects.filter(op_id=qu_op).filter(op_res_date__gt=past_date)).count())
 
         return render(request, 'sentiment/dashboard.html',
                       {'from_months': from_months, 'check_active': check_active, 'review_class':  review_class, 'type': type,

@@ -64,11 +64,12 @@
                     {% csrf_token %}
 
                     <div class="list-group-item list-group-item-action btn btn-outline-info">
+                        <div class="list-group-item list-group-item-action btn btn-outline-info">
+                            <div class="form-group">
 
-                        <div class="form-group">
-                            <label for="">
-                                <h5> Reviews Visualization Setting</h5>
-                            </label>
+                                <p> <b>Reviews Visualization Setting</b></p>
+
+                            </div>
                         </div>
                         <div class="list-group-item list-group-item-action btn btn-outline-info">
                             <div class="form-group">
@@ -120,9 +121,16 @@
                                     {%else%}
                                     <option value="bar">Bar</option>
                                     {%endif%}
+
+                                    {%if type in "horizontalBar"%}
+                                    <option value="horizontalBar" selected>Horizontal Bar</option>
+                                    {%else%}
+                                    <option value="horizontalBar">Horizontal Bar</option>
+                                    {%endif%}
                                     {%if type in "radar"%}
                                     <option value="radar" selected>Radar</option>
                                     {%else%}
+
                                     <option value="radar">Radar</option>
                                     {%endif%}
                                     {%if type in "doughnut"%}
@@ -252,7 +260,7 @@
     let op_num_array = op_num.replace('[', '').replace(']', '').replaceAll("'", '').split(",").map(Number);
 
 
-    var back = ['#5bc0de', '#cbecf7', '#79d4f0', '#ace0f0', '#ace0f5']
+    var back = ['#20c997', '#e83e8c', '#dc3545', '#fd7e14', '#ffc107', '#6c757d', '#28a745', '#17a2b8', '#ffc107', '#28a745', '#20c997']
     var config = []
     for (let i = 0; i < qu_id_array.length; i++) {
         var data = []
@@ -268,10 +276,9 @@
             data.push(darray[j])
             labels.push(larray[j])
         }
-        console.log("data", data)
-        console.log("labels", labels)
+
         type = $('#ch_type').text()
-        console.log('type:', type)
+
 
         config[i] = {
             type: type,

@@ -67,20 +67,21 @@
 
         {% if request.session.admin_user%}
 
-        <li><a class="nav-link" href="{% url 'admin:index' %}">Data Planel<span class="sr-only">(current)</span></a>
+        <li class="nav-item active"><a class="nav-link" href="{% url 'admin:index' %}">Data Planel<span
+              class="sr-only">(current)</span></a>
 
         </li>
 
-        <li class="nav-item active ">
-          <a class="nav-link" href="/sentiment/logout">Logout<span class="sr-only">(current)</span></a>
-        </li>
-
-
-        {% else %}
 
         <li class="nav-item active">
-          <a class="nav-link" href="/sentiment/login">Add new admin<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/sentiment/signup">Add new admin<span class="sr-only">(current)</span></a>
         </li>
+        <li class="nav-item active ">
+          <a class="nav-link" href="/sentiment/logout">Logout<span class="sr-only">(current) </span></a>
+        </li>
+        {% else %}
+
+
         <li class="nav-item active">
           <a class="nav-link" href="/sentiment/login">Login<span class="sr-only">(current)</span></a>
         </li>

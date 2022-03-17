@@ -43,7 +43,13 @@ def main_view(request):
         return HttpResponse(json.dumps(response))
 
     else:
+        get_data = request.GET
+        if (get_data.get("flag") == "0" or get_data.get("flag") == "1"):
+            flag = get_data.get("flag")
+
+        else:
+            flag = "99"
         request.session['accept_flag'] = 0
         request.session['offer_no'] = 0
         print("request.session['offer_no']", request.session['offer_no'])
-        return render(request, "bot-index.html", {'products': products, 'customer': current_customer, 'cart': cart, 'min_disc': min_disc, 'max_disc': max_disc, 'amount': amount})
+        return render(request, "bot-index.html", {'flag': flag, 'products': products, 'customer': current_customer, 'cart': cart, 'min_disc': min_disc, 'max_disc': max_disc, 'amount': amount})

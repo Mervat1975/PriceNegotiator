@@ -11,4 +11,10 @@ class Cart(View):
         ids = list(request.session.get('cart').keys())
         products = Products.get_products_by_id(ids)
         print(products)
-        return render(request, 'store/cart.html', {'products': products})
+        get_data = request.GET
+        if (get_data.get("flag") == "0" or get_data.get("flag") == "1"):
+            flag = get_data.get("flag")
+
+        else:
+            flag = "99"
+        return render(request, 'store/cart.html', {'flag': flag, 'products': products})

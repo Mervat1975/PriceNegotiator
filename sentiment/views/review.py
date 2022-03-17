@@ -28,8 +28,8 @@ class Review(View):
 
         post_data = request.POST
         print("Post", post_data)
-        print("flag", request.session['flag'])
 
+        flag = request.session['flag']
         if (request.session['flag'] == "0"):
             questions = Question.get_web_act_Question()
 
@@ -51,4 +51,4 @@ class Review(View):
                     op_id=QuestionOptions.objects.filter(op_id=int(qu_ans))[0])
                 ans.saveOpRes()
 
-        return render(request, 'sentiment/review-submission.html')
+        return render(request, 'sentiment/review-submission.html', {'flag': flag})

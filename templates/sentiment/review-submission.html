@@ -2,8 +2,46 @@
 
 
 {% block content %}
-<div class="container">
-    <p class="display-4 pl-4 ml-4">Thank You </p>
 
+
+
+<div class="container">
+    <div class="p-3 m-3">
+        <div class="col-lg-5 rounded mx-auto border pt-4">
+            <div class="text-center col">
+
+
+            </div>
+            <h3 class="alert alert-light rounded-pill" style="text-align:center; color:green;">Your review has been
+                successfully submitted</h3>
+
+            {% csrf_token %}
+            <div class="mb-3 form-check">
+                <p>Thank you for submitting your review. your thought means a lot to us</p>
+                <h5>The Store website Manager</h5>
+
+            </div>
+
+
+            <!--Checkme button-->
+            <div class="mb-3 form-check">
+                {%if flag in "0"%}
+                <a href="/cart?flag=0">
+                    {%else%}
+                    <a href="/bot?flag=1">
+                        {%endif%}
+                        <button class="btn btn-sm btn-info col-lg-12">Continue Check-out</button> </a>
+
+            </div>
+
+
+
+
+
+
+
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

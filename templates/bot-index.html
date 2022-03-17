@@ -53,6 +53,7 @@
 
 <body>
 
+
     <nav class="one-edge-shadow
 navbar navbar-light
 sticky-top navbar
@@ -144,8 +145,15 @@ text-white" style="background-color:#5bc0de">
 
                     <tr>
                         <th colspan="4"> </th>
-                        <th colspan="1"> <a href="#" data-toggle="modal" data-target="#reviewModal"
-                                class="btn btn-info border rounded    float-right">Check out</a></th>
+                        <th colspan="1">
+                            {%if flag in "99" %}
+                            <a href="#" data-toggle="modal" data-target="#reviewModal"
+                                class="btn btn-info border rounded    float-right">Check out</a>
+                            {%else%}
+                            <a href="#" data-toggle="modal" data-target="#exampleModal"
+                                class="btn btn-info border rounded    float-right">Check out</a>
+                            {%endif%}
+                        </th>
                         <th colspan="1"> <a href=".." class="btn btn-info border rounded    float-right">Continue
                                 shoping</a></th>
 
@@ -454,7 +462,7 @@ text-white" style="background-color:#5bc0de">
                         </div>
                         <div class="m-3 p-3">
                             <a href="/sentiment/review?flag=1"
-                                class="btn btn-outline-info border rounded  col-lg-3 float-right">
+                                class="btn btn-outline-info border rounded  col-lg-4 float-right">
 
                                 Review
 

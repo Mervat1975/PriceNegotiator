@@ -49,8 +49,16 @@
 
             <a href="#" data-toggle="modal" data-target="#exampleModalBot"
                 class="btn btn-outline-info border rounded  col-lg-3 float-right">Cancel</a>
+
+
+            {%if flag in "99"%}
             <a href="#" data-toggle="modal" data-target="#reviewModal"
                 class="btn btn-outline-info border rounded  col-lg-3 float-right">Check out</a>
+
+            {%else%}
+            <a href="#" data-toggle="modal" data-target="#exampleModal"
+                class="btn btn-outline-info border rounded  col-lg-3 float-right">Check out</a>
+            {%endif%}
         </div>
     </div>
 </div>

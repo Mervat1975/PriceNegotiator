@@ -53,6 +53,8 @@ def main_view(request):
         request.session['accept_flag'] = 0
         request.session['offer_no'] = 0
         discount = get_data.get("discount")
+        if (discount is None):
+            discount = 0.0
 
         return render(request, "bot-index.html", {'flag': flag, 'products': products,
                                                   'customer': current_customer, 'cart': cart, 'min_disc': min_disc,

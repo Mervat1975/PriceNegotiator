@@ -133,7 +133,7 @@ text-white" style="background-color:#5bc0de">
 
                         <th colspan="4"></th>
                         <th class="" colspan="">Discount</th>
-                        <th><label id="disc" style='color:brown;'>0.00%</label></th>
+                        <th><label name='discount' id="disc" style='color:brown;'>{{discount}}%</label></th>
                     </tr>
                     <tr>
 
@@ -461,7 +461,7 @@ text-white" style="background-color:#5bc0de">
                                 improvement purposes.</p>
                         </div>
                         <div class="m-3 p-3">
-                            <a href="/sentiment/review?flag=1"
+                            <a id="review" href="/sentiment/review?flag=1"
                                 class="btn btn-outline-info border rounded  col-lg-4 float-right">
 
                                 Review

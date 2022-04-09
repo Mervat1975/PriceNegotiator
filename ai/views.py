@@ -1,6 +1,7 @@
 import json
 
 from django.shortcuts import render
+from store.models import discount
 from store.models.discount import Discount
 
 import store.templatetags.cart
@@ -25,7 +26,7 @@ def main_view(request):
             if disc.amount_to > int(amount):
                 min_disc = disc.discount_from
                 max_disc = disc.discount_to
-
+    discount = 0.00
     if request.method == 'POST':
 
         response = {'status': None, 'message': None}
@@ -51,5 +52,8 @@ def main_view(request):
             flag = "99"
         request.session['accept_flag'] = 0
         request.session['offer_no'] = 0
-        print("request.session['offer_no']", request.session['offer_no'])
-        return render(request, "bot-index.html", {'flag': flag, 'products': products, 'customer': current_customer, 'cart': cart, 'min_disc': min_disc, 'max_disc': max_disc, 'amount': amount})
+        discount = get_data.get("discount")
+
+        return render(request, "bot-index.html", {'flag': flag, 'products': products,
+                                                  'customer': current_customer, 'cart': cart, 'min_disc': min_disc,
+                                                  'max_disc': max_disc, 'amount': amount, 'discount': discount})

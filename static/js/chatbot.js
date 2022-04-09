@@ -161,6 +161,9 @@ $(document).ready(function () {
                             ai_response += "You got " + disc + "%  discount , the tatol amount is :" +
                                 tot.toString() + " Please complete the checkout process."
                             $('#disc').html(disc.toString() + "%")
+                            console.log($('#disc').html())
+                            $('#review').attr('href', $('#review').attr('href') + "&discount=" + disc.toString())
+                            console.log("xxxx=", $('#review').attr('href'))
                             $('#net').html(tot.toString() + " CAD")
 
                         }

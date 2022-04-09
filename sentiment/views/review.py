@@ -17,18 +17,19 @@ class Review(View):
         else:
             questions = Question.get_all_act_Question()
 
-        print("question:", questions)
-
         options = QuestionOptions.get_all_QuestionOptions()
         request.session['flag'] = get_data.get("flag")
+        request.session['discount'] = get_data.get("discount")
 
-        return render(request, 'sentiment/review.html', {'questions': questions, 'options': options, 'flag': get_data.get("flag")})
+        return render(request, 'sentiment/review.html',
+                      {'questions': questions, 'options': options, 'flag': get_data.get("flag"),
+                       'discount': get_data.get("discount")})
 
     def post(self, request):
 
         post_data = request.POST
         print("Post", post_data)
-
+        discount = request.session['discount']
         flag = request.session['flag']
         if (request.session['flag'] == "0"):
             questions = Question.get_web_act_Question()
@@ -51,4 +52,4 @@ class Review(View):
                     op_id=QuestionOptions.objects.filter(op_id=int(qu_ans))[0])
                 ans.saveOpRes()
 
-        return render(request, 'sentiment/review-submission.html', {'flag': flag})
+        return render(request, 'sentiment/review-submission.html', {'flag': flag, 'discount': discount})

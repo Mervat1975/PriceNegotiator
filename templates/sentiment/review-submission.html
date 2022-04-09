@@ -26,11 +26,11 @@
             <!--Checkme button-->
             <div class="mb-3 form-check">
                 {%if flag in "0"%}
-                <a href="/cart?flag=0">
+                <a href="/cart?flag=0&discount={{discount}}">
                     {%else%}
-                    <a href="/bot?flag=1">
+                    <a href="/bot?flag=1&discount={{discount}}"">
                         {%endif%}
-                        <button class="btn btn-sm btn-info col-lg-12">Continue Checkout</button> </a>
+                        <button class=" btn btn-sm btn-info col-lg-12">Continue Checkout</button> </a>
 
             </div>
 
